@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Blog | Dharmendra Gupta</title>
+    <link>http://localhost:1313/post/</link>
+      <atom:link href="http://localhost:1313/post/index.xml" rel="self" type="application/rss+xml" />
+    <description>Blog</description>
+    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Mon, 06 Jan 2025 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>http://localhost:1313/media/icon_hu_645fa481986063ef.png</url>
+      <title>Blog</title>
+      <link>http://localhost:1313/post/</link>
+    </image>
+    
+    <item>
+      <title>🎉 Bypassing SSL Pinning in a Flutter iOS Application Using Frida</title>
+      <link>http://localhost:1313/post/bypassing_ssl_pinning_in_a_flutter_ios_application_using_frida/</link>
+      <pubDate>Mon, 06 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/bypassing_ssl_pinning_in_a_flutter_ios_application_using_frida/</guid>
+      <description>&lt;!-- Welcome 👋 --&gt;
+
+
+
+&lt;details class=&#34;print:hidden xl:hidden&#34; open&gt;
+  &lt;summary&gt;Table of Contents&lt;/summary&gt;
+  &lt;div class=&#34;text-sm&#34;&gt;
+  &lt;nav id=&#34;TableOfContents&#34;&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;a href=&#34;#overview&#34;&gt;Overview&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&#34;#understanding-flutters-network-stack&#34;&gt;Understanding Flutter’s Network Stack&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&#34;#initial-attempts-and-challenges&#34;&gt;Initial Attempts and Challenges&lt;/a&gt;
+      &lt;ul&gt;
+        &lt;li&gt;&lt;a href=&#34;#1--using-burp-suite-or-charles-proxy&#34;&gt;1.  Using Burp Suite or Charles Proxy&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&#34;#2-attempting-basic-ssl-pinning-bypass&#34;&gt;2. Attempting Basic SSL Pinning Bypass&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;&lt;a href=&#34;#using-frida-and-a-device-wide-proxy-to-intercept-traffic&#34;&gt;Using Frida and a Device-Wide Proxy to Intercept Traffic&lt;/a&gt;
+      &lt;ul&gt;
+        &lt;li&gt;&lt;a href=&#34;#step-1-configure-a-device-wide-proxy&#34;&gt;Step 1: Configure a Device-Wide Proxy&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&#34;#step-2-run-the-frida-script-again&#34;&gt;Step 2: Run the Frida Script Again&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&#34;#step-3-capturing-traffic-with-burp-suite&#34;&gt;Step 3: Capturing Traffic with Burp Suite&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;&lt;a href=&#34;#results-and-findings&#34;&gt;Results and Findings&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&#34;#conclusion-and-key-takeaways&#34;&gt;Conclusion and Key Takeaways&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/nav&gt;
+  &lt;/div&gt;
+&lt;/details&gt;
+
+&lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;
+&lt;p&gt;Recently, I was tasked with pentesting an iOS application built using Flutter. One of the biggest challenges I faced was intercepting network traffic because the application did not rely on a standard HTTP proxy. Traditional interception methods using Burp Suite or Charles Proxy were ineffective. This blog details how I successfully bypassed SSL pinning and captured the app&amp;rsquo;s traffic using Frida.&lt;/p&gt;
+&lt;h2 id=&#34;understanding-flutters-network-stack&#34;&gt;Understanding Flutter’s Network Stack&lt;/h2&gt;
+&lt;p&gt;Flutter applications often use Dart&amp;rsquo;s dart:io package for network communication instead of native HTTP clients. This means they might not route traffic through system-wide proxies, making traditional MITM (Man-in-the-Middle) interception ineffective.
+Some popular network libraries used in Flutter apps include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;dart:io.HttpClient&lt;/li&gt;
+&lt;li&gt;package:http&lt;/li&gt;
+&lt;li&gt;Dio&lt;/li&gt;
+&lt;li&gt;WebSockets (dart:io.WebSocket)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Additionally, many Flutter apps enforce SSL pinning to prevent traffic interception by rejecting custom certificates.&lt;/p&gt;
+&lt;h2 id=&#34;initial-attempts-and-challenges&#34;&gt;Initial Attempts and Challenges&lt;/h2&gt;
+&lt;h3 id=&#34;1--using-burp-suite-or-charles-proxy&#34;&gt;1.  Using Burp Suite or Charles Proxy&lt;/h3&gt;
+&lt;p&gt;Initially, I tried configuring a standard proxy setup:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Installed Burp Suite’s CA certificate on the iOS device.&lt;/li&gt;
+&lt;li&gt;Configured the device to route traffic through Burp’s proxy.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;After configuring the device with Burp proxy, the application was working fully without any errors, as if no proxy was configured. This led me to suspect that the application might be using custom socket connections.&lt;/p&gt;
+&lt;h3 id=&#34;2-attempting-basic-ssl-pinning-bypass&#34;&gt;2. Attempting Basic SSL Pinning Bypass&lt;/h3&gt;
+&lt;p&gt;I initially used the Frida script from &lt;a href=&#34;https://github.com/NVISOsecurity/disable-flutter-tls-verification/blob/main/disable-flutter-tls.js&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;NVISO&lt;/a&gt; Security to bypass SSL pinning:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;frida -U -f your.package.name -l disable-flutter-tls.js&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Although the script printed [+] ssl_verify_peer_cert has been patched in the terminal, as shown in the figure below:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;flex justify-center	&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;./Frida_Script.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+
+I was still unable to see any traffic within Burp Suite. This further reinforced my suspicion that the application was using custom socket connections.&lt;/p&gt;
+&lt;p&gt;To verify if the application was built using Flutter, I renamed the .ipa file to .zip, extracted it, and then navigated to Payload/Runner.app/Frameworks/Flutter.framework, where Flutter-related files were present. This confirmed that the application was built using Flutter, as shown in the figure below:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;flex justify-center	&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;./Flutter_Details.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;h2 id=&#34;using-frida-and-a-device-wide-proxy-to-intercept-traffic&#34;&gt;Using Frida and a Device-Wide Proxy to Intercept Traffic&lt;/h2&gt;
+&lt;p&gt;Since the application might have been using direct socket connections, I decided to set up a device-wide proxy.&lt;/p&gt;
+&lt;h3 id=&#34;step-1-configure-a-device-wide-proxy&#34;&gt;Step 1: Configure a Device-Wide Proxy&lt;/h3&gt;
+&lt;p&gt;To force all traffic through Burp Suite, I installed the Super Proxy application on the device. I then configured it with the IP and port corresponding to Burp Suite’s listening parameters, as shown in the figure below:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;flex justify-center	&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;./Super_Proxy.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;h3 id=&#34;step-2-run-the-frida-script-again&#34;&gt;Step 2: Run the Frida Script Again&lt;/h3&gt;
+&lt;p&gt;With the device-wide proxy enabled, I reran the Frida script:
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-html&#34; data-lang=&#34;html&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;frida -U -f your.package.name -l disable-flutter-tls.js&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/p&gt;
+&lt;h3 id=&#34;step-3-capturing-traffic-with-burp-suite&#34;&gt;Step 3: Capturing Traffic with Burp Suite&lt;/h3&gt;
+&lt;p&gt;With SSL pinning disabled and the system-wide proxy configured, I was finally able to intercept all network traffic, including API requests and WebSocket communications.&lt;/p&gt;
+&lt;h2 id=&#34;results-and-findings&#34;&gt;Results and Findings&lt;/h2&gt;
+&lt;p&gt;With SSL pinning disabled and a device-wide proxy configured, I could:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;View API requests and responses.&lt;/li&gt;
+&lt;li&gt;Analyze WebSocket traffic.&lt;/li&gt;
+&lt;li&gt;Modify requests to test for security vulnerabilities.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;conclusion-and-key-takeaways&#34;&gt;Conclusion and Key Takeaways&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Flutter apps often bypass system proxies&lt;/strong&gt;, making traditional MITM techniques ineffective.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Frida is a powerful tool for bypassing SSL pinning&lt;/strong&gt;, especially in Flutter applications.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;A device-wide proxy configuration can help capture traffic&lt;/strong&gt; when applications use custom socket connections.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;By leveraging Frida and understanding Flutter’s unique network stack, I was able to bypass SSL pinning and intercept traffic successfully. If you&amp;rsquo;re facing similar challenges, I highly recommend experimenting with Frida scripts and configuring a system-wide proxy.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;If you found this blog helpful, feel free to share it!&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
