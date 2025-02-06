@@ -70,7 +70,7 @@ work:
       Responsibilities include:
       - Conducted web and mobile application penetration testing for global clients, identifying vulnerabilities and improving security posture.
       - Performed technical reviews of security reports, ensuring accuracy, consistency, and adherence to industry and NotSoSecure standards.
-      - Led the revamp of the "[**Application Security for Developers**](https://notsosecure.com/security-training/appsec-developers)" training course, managing everything from content design to client delivery.
+      - Developed and Led the revamp of the "[**Application Security for Developers**](https://notsosecure.com/security-training/appsec-developers)" training course, managing everything from content design to client delivery.
       - Delivered on-site and virtual training on secure coding practices, teaching developers how to identify and mitigate vulnerabilities.
       - Researched and experimented with technologies like Vagrant, Docker, Kubernetes, Terraform, and Infrastructure as Code (IaC) to enhance security training content.
       - Developed methodology documents as reference materials to standardize security service delivery.
@@ -89,7 +89,7 @@ work:
       - Conducted comprehensive application security reviews, ensuring robust protection against vulnerabilities whenever changes were implemented.
       - Collaborated with cross-functional teams to analyze and evaluate major and minor application changes, ensuring secure design principles.
       - Performed in-depth mobile application security testing, identifying risks and strengthening defenses against emerging threats.
-      - Led database configuration assessments, aligning with CIS Standards to enhance security posture and compliance.
+      - Conducted and Led database configuration assessments, aligning with CIS Standards to enhance security posture and compliance.
       - Developed custom Python automation scripts to streamline security report generation, adhering to Altisource Database security standards for efficiency and accuracy.
   - position: Associate Consultant
     company_name: KPMG INDIA
