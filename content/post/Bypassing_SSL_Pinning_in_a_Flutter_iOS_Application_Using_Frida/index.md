@@ -97,3 +97,8 @@ With SSL pinning disabled and a device-wide proxy configured, I could:
 By leveraging Frida and understanding Flutter’s unique network stack, I was able to bypass SSL pinning and intercept traffic successfully. If you're facing similar challenges, I highly recommend experimenting with Frida scripts and configuring a system-wide proxy.
 ________________________________________
 If you found this blog helpful, feel free to share it!
+
+#### References
+
+- https://comfy-unicorn-13a0af.netlify.app/post/ssl_pinning_bypass_adventures_in_flutter_mobile_apps/
+- https://github.com/NVISOsecurity/disable-flutter-tls-verification
