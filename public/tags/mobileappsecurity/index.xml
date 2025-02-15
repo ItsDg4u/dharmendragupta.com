@@ -7,7 +7,7 @@
     <description>MobileAppSecurity</description>
     <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Mon, 06 Jan 2025 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>http://localhost:1313/media/icon_hu_645fa481986063ef.png</url>
+      <url>http://localhost:1313/media/icon_hu_ef01400853635e92.png</url>
       <title>MobileAppSecurity</title>
       <link>http://localhost:1313/tags/mobileappsecurity/</link>
     </image>
@@ -42,7 +42,11 @@
       &lt;/ul&gt;
     &lt;/li&gt;
     &lt;li&gt;&lt;a href=&#34;#results-and-findings&#34;&gt;Results and Findings&lt;/a&gt;&lt;/li&gt;
-    &lt;li&gt;&lt;a href=&#34;#conclusion-and-key-takeaways&#34;&gt;Conclusion and Key Takeaways&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&#34;#conclusion-and-key-takeaways&#34;&gt;Conclusion and Key Takeaways&lt;/a&gt;
+      &lt;ul&gt;
+        &lt;li&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/li&gt;
   &lt;/ul&gt;
 &lt;/nav&gt;
   &lt;/div&gt;
@@ -162,6 +166,11 @@ I was still unable to see any traffic within Burp Suite. This further reinforced
 &lt;p&gt;By leveraging Frida and understanding Flutter’s unique network stack, I was able to bypass SSL pinning and intercept traffic successfully. If you&amp;rsquo;re facing similar challenges, I highly recommend experimenting with Frida scripts and configuring a system-wide proxy.&lt;/p&gt;
 &lt;hr&gt;
 &lt;p&gt;If you found this blog helpful, feel free to share it!&lt;/p&gt;
+&lt;h4 id=&#34;references&#34;&gt;References&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://comfy-unicorn-13a0af.netlify.app/post/ssl_pinning_bypass_adventures_in_flutter_mobile_apps/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://comfy-unicorn-13a0af.netlify.app/post/ssl_pinning_bypass_adventures_in_flutter_mobile_apps/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/NVISOsecurity/disable-flutter-tls-verification&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://github.com/NVISOsecurity/disable-flutter-tls-verification&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
 </description>
     </item>
     

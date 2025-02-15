@@ -414,8 +414,6 @@
       "z-30"
     ],
     "ids": [
-      "--nvisosecurity---disable-flutter-tls-verificationhttpsgithubcomnvisosecuritydisable-flutter-tls-verification",
-      "--ssl-pinning-bypass-adventures-in-flutter-mobile-appshttpscomfy-unicorn-13a0afnetlifyapppostssl_pinning_bypass_adventures_in_flutter_mobile_apps",
       "1--using-burp-suite-or-charles-proxy",
       "2-attempting-basic-ssl-pinning-bypass",
       "TableOfContents",
