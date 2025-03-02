@@ -15,6 +15,19 @@ tags:
   - SSLPinningBypass
   - iOSPentesting
   - MobileAppSecurity
+  - SSL Pinning Bypass
+  - Flutter SSL Pinning
+  - iOS SSL Pinning Bypass
+  - Frida SSL Pinning
+  - Bypass SSL Pinning iOS
+  - Frida Flutter SSL Pinning
+  - iOS Application Security
+  - Mobile App Penetration Testing
+  - Reverse Engineering Flutter Apps
+  - SSL Pinning Frida Script
+  - iOS App Hacking
+  - Flutter Security Testing
+  - Frida Mobile Security
 ---
 
 <!-- Welcome 👋 -->
