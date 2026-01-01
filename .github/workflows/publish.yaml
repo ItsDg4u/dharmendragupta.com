@@ -40,7 +40,9 @@ jobs:
 
     # --- NEW STEP 2: Install Tailwind & other libraries ---
     - name: Install dependencies
-      run: npm install
+      run: |
+        rm -f package-lock.json
+        npm install
 
     - name: Setup Hugo
       uses: peaceiris/actions-hugo@v3
