@@ -2,8 +2,8 @@ main:
   - name: About Me
     url: /
     weight: 10
-  - name: Post
-    url: /post
+  - name: Blogs
+    url: /blog
     weight: 13
   - name: Experience
     url: /#experience

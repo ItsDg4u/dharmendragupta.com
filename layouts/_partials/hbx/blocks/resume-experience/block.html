@@ -16,7 +16,7 @@
 {{ $person := $person_page.Params }}
 {{ $is_education_first := $block.design.is_education_first | default false }}
 
-<div class="flex flex-col items-center max-w-prose mx-auto">
+<div class="flex flex-col w-full max-w-6xl mx-auto px-6 lg:px-0">
 <!--  <article class="prose prose-slate lg:prose-xl dark:prose-invert">-->
 <!--    {{ with $block.content.title }}-->
 <!--    <h2>{{ . }}</h2>-->
@@ -24,7 +24,8 @@
 <!--  </article>-->
 
 <!-- Need Gap >= 3 when flex-row due to negative margin on cols (-start-3) -->
-<div class="flex flex-col lg:gap-x-6 w-100 px-6 sm:px-0 {{ if $is_education_first }}flex-col-reverse{{end}}">
+<div class="flex flex-col {{ if $is_education_first }}flex-col-reverse{{end}}">
+    <div class="w-full max-w-4xl mx-auto px-4 sm:px-0">
 
 {{ if $person.work }}
 <div class="w-full" id="experience">
@@ -49,7 +50,7 @@
           {{ i18n "present" | default "Present" }}
         {{end}}
       </time>
-      <div class="mb-4 text-base font-normal text-gray-500 dark:text-gray-300 text-wrap prose prose-slate dark:prose-invert">{{.summary | $page.RenderString}}</div>
+      <div class="mb-4 text-base font-normal text-gray-500 dark:text-gray-300 prose prose-slate dark:prose-invert max-w-none">{{.summary | $page.RenderString}}</div>
 
       {{ with .button }}
       <a href="{{.url}}" target="_blank" rel="noopener" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-200 focus:text-primary-700 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700"><svg class="w-3.5 h-3.5 me-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -63,7 +64,7 @@
   </ol>
 </div>
 {{ end }}
-
+</div>
 </div>
 
 </div>

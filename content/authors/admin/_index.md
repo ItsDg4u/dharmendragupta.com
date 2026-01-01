@@ -50,6 +50,10 @@ education:
 
 certification:
   certificates:
+  - certificate: Certified AI Security Expert (MSec-CAIS)
+    institution: Modern Security- AI and Appsec Trainings
+    validity: December 2025
+    link: https://www.modernsecurity.io/certificates/2iojpc909i
   - certificate: Certified Kubernetes Security Specialist
     institution: The Linux Foundation
     validity: February 2024
@@ -60,12 +64,23 @@ certification:
     link: https://www.credly.com/badges/30fb16c3-5d14-40ae-a952-83592fade34b
 
 work:
+  - position: Information Security Anaylst III
+    company_name: Netskope
+    company_url: 'https://www.netskope.com/'
+    company_logo: ''
+    date_start: 2025-09-01
+    date_end: ''
+    summary: |
+      Responsibilities include:
+      - Built a Python-based intelligent triage engine to process security findings at scale across a multi-account AWS organization, autonomously validating resource existence and ownership to eliminate manual verification bottlenecks.
+      - Developed "Smart Scan" logic that programmatically verifies real-world exposure—such as validating S3 VPC Endpoint restrictions and RDS network routing—to filter false positives and prioritize critical risks.
+      - Conducted comprehensive security assessments including Static Application Security Testing (SAST), Cloud Configuration Reviews, and Kubernetes cluster audits to identify and remediate vulnerabilities across the infrastructure and application stack.
   - position: Senior Security Consultant
     company_name: NotSoSecure
     company_url: 'https://notsosecure.com/'
     company_logo: ''
     date_start: 2019-02-25
-    date_end: ''
+    date_end: 2025-08-29
     summary: |
       Responsibilities include:
       - Conducted web and mobile application penetration testing for global clients, identifying vulnerabilities and improving security posture.
@@ -112,6 +127,6 @@ work:
 
 ## About Me
 
-Dharmendra Gupta is an information security professional working as a Senior Security Consultant at NotSoSecure. He has over 10+ years of experience in application, mobile and network security.
+Dharmendra Gupta is an information security professional working as a Information Security Anaylst III at Netskope. He has over 11+ years of experience in application, mobile and network security.
 
 In his free time, he likes reading books or watching movies.
