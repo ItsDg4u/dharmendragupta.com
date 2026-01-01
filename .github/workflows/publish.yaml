@@ -29,30 +29,46 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
       with:
-          # Fetch history for Hugo's .GitInfo and .Lastmod
         fetch-depth: 0
+    
+    # --- NEW STEP 1: Setup Node.js environment ---
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+
+    # --- NEW STEP 2: Install Tailwind & other libraries ---
+    - name: Install dependencies
+      run: npm install
+
     - name: Setup Hugo
       uses: peaceiris/actions-hugo@v3
       with:
         hugo-version: ${{ env.WC_HUGO_VERSION }}
         extended: true
+        
     - uses: actions/cache@v4
       with:
         path: /tmp/hugo_cache_runner/
         key: ${{ runner.os }}-hugomod-${{ hashFiles('**/go.mod') }}
         restore-keys: |
           ${{ runner.os }}-hugomod-
+          
     - name: Setup Pages
       id: pages
       uses: actions/configure-pages@v5
+      
     - name: Build with Hugo
       env:
         HUGO_ENVIRONMENT: production
       run: |
         echo "Hugo Cache Dir: $(hugo config | grep cachedir)"
         hugo --minify --baseURL "${{ steps.pages.outputs.base_url }}/"
+        
     - name: Generate Pagefind search index
       run: npx pagefind --site "public"
+      
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v3
       with:
@@ -70,3 +86,4 @@ jobs:
     - name: Deploy to GitHub Pages
       id: deployment
       uses: actions/deploy-pages@v4
+
