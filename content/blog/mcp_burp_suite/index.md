@@ -15,16 +15,17 @@ authors:
 
 tags:
   - MCP
-  - Claude
+  - Claude Desktop
   - Burp Suite
   - Debugging
-  - Security
   - Model Context Protocol
   - Application Security
-  - Web Security Testing
   - Security Automation
-  - AI for Security
+  - AI Security
   - Pentesting
+  - LLM Security
+  - MCP Pentest
+  - AI Assisted Pentesting
 ---
 
 <!-- Welcome 👋 -->
