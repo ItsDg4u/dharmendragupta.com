@@ -75,7 +75,7 @@ work:
       - Built a Python-based intelligent triage engine to process security findings at scale across a multi-account AWS organization, autonomously validating resource existence and ownership to eliminate manual verification bottlenecks.
       - Developed "Smart Scan" logic that programmatically verifies real-world exposure—such as validating S3 VPC Endpoint restrictions and RDS network routing—to filter false positives and prioritize critical risks.
       - Conducted comprehensive security assessments including Static Application Security Testing (SAST), Cloud Configuration Reviews, and Kubernetes cluster audits to identify and remediate vulnerabilities across the infrastructure and application stack.
-  - position: Senior Security Consultant
+  - position: Prinicipal Security Consultant
     company_name: NotSoSecure
     company_url: 'https://notsosecure.com/'
     company_logo: ''

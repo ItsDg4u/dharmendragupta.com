@@ -19,6 +19,12 @@ tags:
   - Burp Suite
   - Debugging
   - Security
+  - Model Context Protocol
+  - Application Security
+  - Web Security Testing
+  - Security Automation
+  - AI for Security
+  - Pentesting
 ---
 
 <!-- Welcome 👋 -->
